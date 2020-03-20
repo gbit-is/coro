@@ -245,3 +245,27 @@ U.K. | 67545757
 U.A.E. | 9599353
 State of Palestine | 5051953
 Diamond Princess | 2670
+DRC | 91931000
+Guadeloupe |395700
+Réunion | 859959
+Guam |	162742
+Puerto Rico | 	3193694
+Aruba | 112309
+Curaçao | 158665
+Mayotte |  	279471
+Tanzania | 	56313438
+Cayman Islands | 68076
+CAR | 4666368
+Greenland |  55992
+Guinea | 	12414293
+Montserrat | 4649
+Somalia | 	11031386
+French Polynesia |275918
+U.S. Virgin Islands |106405
+St. Vincent Grenadines | 110211
+Bermuda  | 71176
+New Caledonia | 282200
+Sint Maarten | 41486
+Brunei | 442400
+Cabo Verde | 543767
+Isle of Man | 83314
