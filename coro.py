@@ -7,8 +7,9 @@ import json
 
 # Establish Vars
 url = "https://www.worldometers.info/coronavirus/"
+#url = "https://gbit.is/coro/static/"
 
-home = "/var/www/html/"  # location of home folder for html,json and population txt
+home = "/var/www/gbit/coro/"  # location of home folder for html,json and population txt
 report = home + "report.json"
 popdoc = home + "population.txt"
 
@@ -20,8 +21,11 @@ popdoc = home + "population.txt"
 
 page = requests.get(url) # Get the sites content
 soup = BeautifulSoup(page.content, 'html.parser') # Load it to BS4
-table = soup.find('table', id="main_table_countries") # Get the table itself
+#table = soup.find('table', id="main_table_countries") # Get the table itself
+table = soup.find('table', id="main_table_countries_today") # Get the table itself
 	
+
+
 
 
 
@@ -63,21 +67,22 @@ for x in results: # For each line in the html table
 		pass
 	else:
 
-		l = x["Country,Other"] # Get name of country
-		l = l.contents
+		l = x["Country,Other"] # Get the country field 
+		l = l.contents # load the content
 
 
-		if True: # It's quicker then reming a layer of indent after the site is changed and your code stop working ...
+		if True: # It's quicker then removing a layer of indent after the site is changed and your code stop working ...
 
-			if l[0] == " " : # if first column is empty, the title has a link, parse that out
-				l = l[1]
-				l = str(l)
-				l = l.split('">')[1].split('<')[0]
-			else: # if not, it's a name and we just gotta clean it up a little
 
-				l = l[0]
-				l = str(l)
-				l = l.strip()
+			l = l[0] # Get the only field 
+			l = str(l)	 # make it a string
+			if "href" in l:	 # if it contains a link
+				l = l.split(">")[1].split("<")[0] # strip out the name from the field
+			elif "span style=" in l: # If it contains some weird color info, like the diamond princess
+				l = l.split(">")[1].split("<")[0] # strip out the name form the field
+
+			l = l.strip() # Remove extra white space
+
 
 			if l == "<strong>Total:</strong>": # No need to parse the header line
 				pass
@@ -125,7 +130,7 @@ for x in results: # For each line in the html table
 
 						}
 					coll.append(foo) # append it to the list of parsed messages
-				except:
+				except Exception as e:
 					print("couldn't find country " + l) # couldn't find the country, complain about it
 
 					
@@ -135,5 +140,3 @@ coll = sorted(coll, key = lambda i: i['freq'],reverse=True)  # sort it based on 
 # write the json
 with open(report, 'w') as outfile:
 	json.dump(coll, outfile)
-	pass
-
